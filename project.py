@@ -70,7 +70,7 @@ class PriceMachine:
             return 'Работа окончена'
 
         else:
-            result = pm.result[pm.result['наименование'].str.contains(request)]
+            result = pm.result[pm.result['наименование'].str.contains(request, case=False)]
 
             result = result.copy()
 
