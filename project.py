@@ -21,11 +21,11 @@ class PriceMachine:
         name_column_name = ["название", "продукт", "товар", "наименование"]
         weight_column_name = ["фасовка", "масса", "вес"]
 
-        for dirpath, dirnames, filenames in os.walk(self.directory):
-            self.my_list.extend([os.path.join(dirpath, file) for file in filenames if 'price' in file])
+       files in os.listdir(self.directory):
 
-            for file in self.my_list:
-                df = pd.read_csv(file)
+            for filenames in files:
+                if 'price' in filenames:
+                    df = pd.read_csv(file)
 
                 for i, row in df.iterrows():
                     sp = []
