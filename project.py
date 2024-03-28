@@ -21,11 +21,9 @@ class PriceMachine:
         name_column_name = ["название", "продукт", "товар", "наименование"]
         weight_column_name = ["фасовка", "масса", "вес"]
 
-       files in os.listdir(self.directory):
-
-            for filenames in files:
-                if 'price' in filenames:
-                    df = pd.read_csv(file)
+        for filenames in os.listdir(self.directory):
+            if 'price' in filenames:
+                df = pd.read_csv(filenames)
 
                 for i, row in df.iterrows():
                     sp = []
@@ -43,6 +41,8 @@ class PriceMachine:
                             sp_weight.append(row[name])
                             sp.append(row[name])
                     self.data.append(sp)
+            else:
+                continue
 
         for i in self.data:
             price_kg = int(i[0]) // int(i[2])
