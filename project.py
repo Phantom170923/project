@@ -4,7 +4,8 @@ import pandas as pd
 
 class PriceMachine:
     
-    def __init__(self):
+    def __init__(self, request):
+        self.request = request
         self.result = pd.DataFrame()
         self.my_list = []
         self.data = []
@@ -63,29 +64,32 @@ class PriceMachine:
 
     def export_to_html(self):
 
-        return self.result.to_html('my_output.html')
+        return self.result.to_html('my_output.html', encoding='cp1251')
     
-    def find_text(self, request):
-        if request == 'exit':
+    def find_text(self):
+
+        self.request = input('Введите запрос: ')
+
+        if self.request == 'exit':
             return 'Работа окончена'
 
         else:
-            result = pm.result[pm.result['наименование'].str.contains(request, case=False)]
+            self.result = pm.result[pm.result['наименование'].str.contains(self.request, case=False)]
 
-            result = result.copy()
+            self.result = self.result.copy()
 
-            result.sort_values(by='цена за кг', inplace=True, ascending=True)
+            self.result.sort_values(by='цена за кг', inplace=True, ascending=True)
 
-            result.reset_index(drop=True, inplace=True)
+            self.result.reset_index(drop=True, inplace=True)
 
-            return result
+            return self.result
 
     
 pm = PriceMachine()
 
 print(pm.load_prices())
 
-print(pm.find_text(request=input('Введите запрос:')))
+print(pm.find_text())
 
 print(pm.export_to_html())
 
